@@ -1,5 +1,14 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Rx Savings Solutions Backend Developer Code Challenge
+In order for this project to work you will have to create a [mogoDB account](https://account.mongodb.com/account/login), a cluster and have a collenction in that cluster called `pharmacies`. Of course, you can change this accordingly providing you change the project accordingly.
 
+Once that is done you will need to add a `.env` file to get accessto the mongoDB. It would look something like:
+```
+MONGODB_URL=mongodb+srv://<accountName>:<password>@cluster0.rddkj.mongodb.net/<NameSpace>?retryWrites=true&w=majority
+```
+where account `<accountName>` is your login name. `<password>` is your password and `<NameSpace>` is where your table is held.
+
+
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 ## Available Scripts
 
 In the project directory, you can run:
@@ -12,10 +21,24 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 The page will reload if you make edits.<br />
 You will also see any lint errors in the console.
 
-### `npm test`
+### `npm test` NO TESTS CURRENTLY
 
 Launches the test runner in the interactive watch mode.<br />
 See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+
+### `npm run dev-server`
+
+Runs the mongoose connection to mongoDB runs on [http://localhost:3001](http://localhost:3001).<br />
+To hit the api use postman or a normal curl command (don't have postman? [Download here](https://www.postman.com/downloads/)).
+
+An example postman GET call looks like:
+```
+http:\\localhost:3001/pharmacy?latitude=38.907753&longitude=-94.60801
+```
+and results in:
+```
+{"pharmacy":{"_id":"5f5db82efb4fef37cb72d1ce","name":"HY-VEE PHARMACY","address":"12122 STATE LINE RD","city":"LEAWOOD","state":"KS","zip":66209,"latitude":38.907753,"longitude":-94.60801},"distance":0}
+```
 
 ### `npm run build`
 

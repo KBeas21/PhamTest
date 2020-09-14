@@ -6,12 +6,26 @@
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "mongoose": "^5.10.5",
+    "node-sass": "^4.14.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-scripts": "3.4.3"
+    "react-intl": "^2.9.0",
+    "react-scripts": "3.4.3",
+    "terra-button": "^3.47.0",
+    "terra-card": "^3.34.0",
+    "terra-content-container": "^3.30.0",
+    "terra-form-input": "^4.3.0",
+    "terra-form-textarea": "^5.3.0",
+    "terra-grid": "^6.24.0",
+    "terra-spacer": "^3.46.0"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "react-scripts start && start-api",
+    "start-api": "node api/src/index.js",
+    "dev-server": "nodemon api/src/index.js",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
@@ -30,5 +44,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.4"
   }
 }
