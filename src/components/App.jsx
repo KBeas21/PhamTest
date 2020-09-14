@@ -21,7 +21,8 @@ class App extends Component {
   }
 
   getClosestPharm() {
-    const lat1 = document.getElementById('latitude-input').value; // will not work with values with e
+    // will not work with values with e, Euler's number - but lat and long should not have this - a user could still type it in.
+    const lat1 = document.getElementById('latitude-input').value;
     const long1 = document.getElementById('longitude-input').value;
     const options = {
       method: 'GET',

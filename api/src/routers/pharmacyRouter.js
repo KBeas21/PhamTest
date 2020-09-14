@@ -52,9 +52,9 @@ router.get("/pharmacy", async (req, res) => {
  */
 async function findClosestPharmacy(givenLatitude, givenLongitude) {
     const pharmacies = await Pharmacy.find({}); // returns an array of objects
-    const EARTHS_RADIUS_MILES = 3961; // constant for converting to miles, 6371 for kilometers
+    const EARTHS_RADIUS_MILES = 3959; // constant for converting to miles, 6371 for kilometers
     let distanceArray = [];
-    let radCurrentLat, radCurrentLong, thetaLong, radthetaLong, thetaLat, radthetaLat, distance;
+    let radCurrentLat, radCurrentLong, deltaLong, radDeltaLong, deltaLat, radDeltaLat, distance;
 
     for (let pharmacy of pharmacies) {
       const { latitude, longitude, _id } = pharmacy;
@@ -64,15 +64,15 @@ async function findClosestPharmacy(givenLatitude, givenLongitude) {
         distanceArray.push({ _id, distance: 0 });
         break;
       } else {
-        radCurrentLat = Math.PI * givenLatitude/180;
-        radCurrentLong = Math.PI * givenLongitude/180;
-        thetaLong = longitude - givenLongitude;
-        radthetaLong = Math.PI * thetaLong/180;
-        thetaLat = latitude - givenLatitude; 
-        radthetaLat = Math.PI * thetaLat/180;
+        radCurrentLat = toRadians(givenLatitude);
+        radCurrentLong = toRadians(givenLongitude);
+        deltaLong = longitude - givenLongitude;
+        radDeltaLong = toRadians(deltaLong);
+        deltaLat = latitude - givenLatitude;
+        radDeltaLat = toRadians(deltaLat);
         
-        const a = Math.pow(Math.sin(radthetaLat / 2), 2) + Math.cos(radCurrentLat)
-          * Math.cos(latitude * Math.PI / 180) * Math.pow(Math.sin(radthetaLong / 2), 2);
+        const a = Math.pow(Math.sin(radDeltaLat / 2), 2) + Math.cos(radCurrentLat)
+          * Math.cos(latitude * Math.PI / 180) * Math.pow(Math.sin(radDeltaLong / 2), 2);
         const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
         distance = EARTHS_RADIUS_MILES * c;
 
@@ -87,15 +87,25 @@ async function findClosestPharmacy(givenLatitude, givenLongitude) {
     const pharmacy = pharmacies.find((pharmacy) => pharmacy._id === distanceArray[0]._id);
 
     return { pharmacy, distance: distanceArray[0].distance }
-    // pharmacy.distance = distanceArray[0].distance;
-    // return { pharmacy } // see partner code in model for more information
+    // pharmacy.distance = distanceArray[0].distance; // see partner code in model for more information
+    // return { pharmacy }
+}
+
+/**
+ * Converts a number to radians
+ *
+ * @param {Number} num  - you want to convert to radians
+ * @returns the provided number in radians.
+ */
+function toRadians(num) {
+  return (num * Math.PI)/180;
 }
 
 /**
  * A naive approach not calculating for the curvature of the earth...flat earther approach?
  *
- * @param {Number} lat latitude you wish to calculate distance from.
- * @param {Number} long longitude you wish to calculate distance from.
+ * @param {Number} lat - latitude you wish to calculate distance from.
+ * @param {Number} long - longitude you wish to calculate distance from.
  */
 async function flatEarthApproach(lat, long) {
   const pharmacies = await Pharmacy.find({});
