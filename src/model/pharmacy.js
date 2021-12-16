@@ -3,15 +3,35 @@
  */
 class Pharmacy {
   constructor(pharmacy, distance) {
+    this._id = pharmacy._id;
     this.address = pharmacy.address;
     this.city = pharmacy.city;
+    this.state = pharmacy.state;
+    this.zip = pharmacy.zip;
+    this.distance = distance;
     this.latitude = pharmacy.latitude;
     this.longitude = pharmacy.longitude;
     this.name = pharmacy.name;
-    this.state = pharmacy.state;
-    this.zip = pharmacy.zip;
-    this._id = pharmacy._id;
-    this.distance = distance;
+  }
+
+  getAddress() {
+    return this.address;
+  }
+
+  getCity() {
+    return this.city;
+  }
+
+  getState() {
+    return this.state;
+  }
+
+  getZip() {
+    return this.zip;
+  }
+
+  getDistance() {
+    return this.distance;
   }
 
   toString() {
